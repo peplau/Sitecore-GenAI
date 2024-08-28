@@ -1,0 +1,102 @@
+﻿---
+ID: "0a2c8b1a-f584-42fa-89fb-3cbc174e3d49"
+Parent: "3596b528-9b00-4c8d-9a5a-d9c8ad35e1a4"
+Template: "dd22f1b3-bd87-4db2-9e7d-f7a496888d43"
+Path: /sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Functions/GenAI_Functions
+SharedFields:
+- ID: "b1a94ff0-6897-47c0-9c51-aa6acb80b1f0"
+  Hint: Script
+  Value: |
+    Import-Function -Name GenAI_Constants
+    
+    function Get-OpenAISettings {
+        $settings = Get-Item -Path master: -Query "$($GenAI_Settings_Path)//*[@@templateid='$($GenAI_OpenAISettings_TemplateID)']"
+        return $settings;
+    }
+    
+    function Get-OpenAIApiKey(){
+        param( $settingsItem )
+        $apiKey = Get-FieldValue $settingsItem $GenAI_ApiKey_FieldName $null
+        return $apiKey
+    }
+    
+    function Get-OpenAIModel(){
+        param( $settingsItem )
+        $modelField = [Sitecore.Data.Fields.ReferenceField]$settingsItem.Fields[$GenAI_Model_FieldName]
+        if ($modelField -eq $null){
+            return [String]::Empty
+        }
+        $modelItem = $modelField.TargetItem
+        if ($modelItem -eq $null){
+            return [String]::Empty
+        }
+        return Get-FieldValue $modelItem $GenAI_ModelKey_FieldName $null
+    }
+    
+    function Get-MessageFromGpt(){
+        param( $system, $user, $apiKey, $model)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+            "Authorization" = "Bearer $($apiKey)"
+        }
+        $requestData = @{
+            model = $model
+            messages = @(
+                @{
+                    role = "system"
+                    content = $system
+                },
+                @{
+                    role = "user"
+                    content = $user
+                }
+            )
+            max_tokens = 1000
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri "https://api.openai.com/v1/chat/completions" -Method Post -Headers $headers -Body $body
+            $responseData = $response.choices[0].message.content
+            return $responseData
+        }
+        catch {
+            return $null
+        }    
+    }
+    
+    function Get-FieldValue(){
+        param( $item, $fieldName, $defaultValue = "" )
+        $field = $item.Fields[$fieldName]
+        if ($field -eq $null){
+            return $defaultValue
+        }
+        return $field.Value
+    }
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20240828T144103Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "9090557c-c6e6-4c1a-8ef2-86b2e36b1ee9"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20240828T145815Z

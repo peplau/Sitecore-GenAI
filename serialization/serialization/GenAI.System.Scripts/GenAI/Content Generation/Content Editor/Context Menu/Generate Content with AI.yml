@@ -1,0 +1,225 @@
+﻿---
+ID: "6368ad64-f2d4-48e8-83fc-ddc44fa3c9f5"
+Parent: "59f1cf29-88a0-46af-b652-0ce819de866e"
+Template: "dd22f1b3-bd87-4db2-9e7d-f7a496888d43"
+Path: /sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/Generate Content with AI
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Office/32x32/robot.png
+- ID: "b1a94ff0-6897-47c0-9c51-aa6acb80b1f0"
+  Hint: Script
+  Value: |
+    Import-Function -Name GenAI_Functions
+    
+    # -------------------
+    # Script Setup
+    # -------------------
+    
+    # Get OpenAISettings - No OpenAISettings item
+    $settingsItem = Get-OpenAISettings
+    if ($settingsItem -eq $null){
+        Write-Log "[GenAI] You must setup your OpenAISettings item" -Log Error
+        Close-Window
+    }
+    # APIKey - No APIKey is set
+    $apiKey = Get-OpenAIApiKey $settingsItem
+    if ([string]::IsNullOrEmpty($apiKey) -eq $true){
+        Write-Log "[GenAI] You must setup your 'API Key' in the OpenAISettings item" -Log Error
+        Close-Window
+    }
+    # Get Model - No Model is set
+    $model = Get-OpenAIModel $settingsItem
+    if ([string]::IsNullOrEmpty($model) -eq $true){
+        Write-Log "[GenAI] You must setup your 'Model' at the OpenAISettings item" -Log Error
+        Close-Window
+    }
+    
+    # -------------------
+    # Select the template
+    # -------------------
+    $selectedTemplateId = $null
+    if ($selectedTemplateId -eq $null) {
+        $insertOptionItems = $SitecoreContextItem["__Masters"].Split("|") | ForEach-Object { Get-Item -Path master: -ID $_ }
+        $insertOptions = @{}
+        foreach ($templateItem in $insertOptionItems) { 
+            $insertOptions[$templateItem.Name] = $templateItem.ID 
+        }
+        $parameters = @(
+            @{ Name = "template"; Title="Template (Insert Options):"; Editor="radio"; Options=$insertOptions}
+            @{ Name = "templateAny"; Title="Template (Others):"; Editor="droptree"; Source="DataSource=/sitecore/templates&IncludeTemplatesForSelection=template";}
+        )
+        $props = @{
+            Title = "Generate Content with AI";
+            Description = "Select the template to create new item from";
+            Icon = "OfficeWhite/32x32/robot.png";
+            Parameters = $parameters;
+            Width = 400;
+            Height = 350;
+        }
+        $result = Read-Variable @props
+        if($result -ne "ok" -or ($result -eq "ok" -and $template -eq $null -and $templateAny -eq $null)) {
+            Close-Window
+            Exit
+        }
+        if ($template -ne $null) { $selectedTemplateId = $template }
+        else { $selectedTemplateId = $templateAny.ID.ToString() }
+    }
+    
+    # --------------------------
+    # Content User Prompt
+    # --------------------------
+    $lengthOptions = @{
+        "Headline" = "Headline"
+        "Medium" = "Medium"
+        "Long" = "Long"
+    }
+    
+    $toneOptions = @{
+        "Educational" = "Educational"
+        "Conversational" = "Conversational"
+        "Persuasive" = "Persuasive"
+        "Humorous" = "Humorous"
+        "Formal" = "Formal"
+        "Inspirational" = "Inspirational"
+        "Technical" = "Technical"
+        "Analytical" = "Analytical"
+        "Creative" = "Creative"
+    }
+    
+    # Fields from templates -----
+    $fieldOptions = @{}
+    [Sitecore.Data.Items.TemplateItem] $selectedTemplate = Get-Item -Path master: -ID $selectedTemplateId
+    foreach($field in $selectedTemplate.Fields){
+        if (($field.Type.ToLower().Contains("text") -or $field.Type.ToLower().Contains("image")) -and $field.Key.StartsWith("__") -eq $false){
+            $fieldOptions += @{"$($field.Name) ($($field.Type))" = $field.ID.ToString()}
+        }
+    }
+    # -----------
+    
+    $parameters = @(
+        @{ Name = "forceItemName"; Title="Force Item Name"; Placeholder = "Leave it empty to also generate an Item Name"; Tab="Content"},
+        @{ Name = "contentInput"; Title="What do you want the content to speak about?"; Lines=7; Placeholder = ""; Tab="Content"},
+        @{ Name = "keywords"; Title="Keywords (comma-separated)"; Placeholder = ""; Tab="Content"},
+        @{ Name = "lenght"; Title="Select the length"; Options = $lengthOptions; Editor="radio"; Tab="Content"; Value="Headline"}
+        @{ Name = "tone"; Title="Choose a tone for your text"; Options = $toneOptions; Tab="Content"}
+        @{ Name = "fields"; Title="Select the fields to populate:"; Options = $fieldOptions; Editor="check"; Tab="Template"}
+    )
+    
+    $props = @{
+        Title = "Generate Content with AI";
+        Description = " ";
+        Icon = "OfficeWhite/32x32/robot.png";
+        ShowHints = $true;
+        Parameters = $parameters;
+        Width = 600;
+        Height = 680;
+    }
+    $result = Read-Variable @props
+    if($result -ne "ok" -or [String]::IsNullOrEmpty($contentInput) -or [String]::IsNullOrEmpty($keywords) -or $fields.Count -eq 0) {
+        Close-Window
+        Exit
+    }
+    
+    # --------------------------
+    # Content Generation Prompt
+    # --------------------------
+    # Template
+    $database = Get-Database -Name "master"
+    $templateItem = [Sitecore.Data.Managers.TemplateManager]::GetTemplate($selectedTemplateId, $database)
+    $templateName = $templateItem.FullName
+    # Fields
+    $textFieldArray = @()
+    $imageFieldArray = @()
+    $textFieldArray += @{Field="ItemName"; Type="Single-Line Text"}
+    foreach($fieldId in $fields){
+        $fieldItem = Get-Item -Path master: -ID $fieldId
+        if ($fieldItem -and $fieldItem.TemplateName -eq "Template field"){
+            $fieldName = $fieldItem.Name
+            $fieldType = $fieldItem["Type"]
+            if ($fieldType.ToLower() -ne "image"){
+                $textFieldArray += @{Field=$fieldName; Type=$fieldType}
+            }
+            else {
+                $imageFieldArray += @{Field=$fieldName; Type=$fieldType}
+            }
+        }
+    }
+    $textFieldJson = $textFieldArray | ConvertTo-Json
+    $imageFieldJson = $imageFieldArray | ConvertTo-Json
+    
+    $sb = New-Object -TypeName "System.Text.StringBuilder"
+    [void]$sb.AppendLine("You will help a Sitecore Content Editor to generate content for an item of a given Template")
+    [void]$sb.AppendLine("INPUT: ")
+    [void]$sb.AppendLine("- Template Name (string) Eg: 'Article'")
+    [void]$sb.AppendLine("- Fields to generate content (JSON) Eg: [{Field:'Title',Type:'Single-Line Text'},{Field:'Body',Type:'Rich Text'}]")
+    [void]$sb.AppendLine("- Length (string)")
+    [void]$sb.AppendLine("- Tone (string)")
+    [void]$sb.AppendLine("- Keywords (string) - Comma-separated list of keywords to use")
+    [void]$sb.AppendLine("- Content Input (string) - Description of the content to be generated")
+    [void]$sb.AppendLine("OUTPUT: Generated content (JSON)")
+    [void]$sb.AppendLine("- Skip any explanations, output the JSON and nothing else")
+    [void]$sb.AppendLine("- Match content with field types: Short text for 'Single-Line Text', Long text for 'Multi-Line Text', Basic HTML markup for 'Rich Text'")
+    [void]$sb.AppendLine("Example of valid output: [{FieldName:'Field1', Value:'Content'},{FieldName:'Field2', Value:'Content'}]")
+    $systemPrompt = $sb.ToString()
+    
+    $sb = New-Object -TypeName "System.Text.StringBuilder"
+    [void]$sb.AppendLine("- Template: $($templateName)")
+    [void]$sb.AppendLine("- Fields: $($textFieldJson)")
+    [void]$sb.AppendLine("- Length: $($lenght)")
+    [void]$sb.AppendLine("- Tone: $($tone)")
+    [void]$sb.AppendLine("- Keywords: $($keywords)")
+    [void]$sb.AppendLine("- Content Input: ")
+    [void]$sb.AppendLine("$($contentInput)")
+    $userPrompt = $sb.ToString()
+    
+    # --------------------------
+    # Content Generation Itself
+    # --------------------------
+    $messageFromGpt = Get-MessageFromGpt $systemPrompt $userPrompt $apiKey $model
+    $messageFromGpt = $messageFromGpt.Replace('```json','').Replace('```]','').Replace('```','')
+    $jsonMessage = $messageFromGpt | ConvertFrom-Json
+    
+    # --------------------------------------
+    # Create new Item with Generated Content
+    # --------------------------------------
+    $itemNameEntry = $jsonMessage | Where-Object{ $_.FieldName -eq "ItemName" } | Select-Object -First 1
+    $newItemName = [Sitecore.Data.Items.ItemUtil]::ProposeValidItemName($itemNameEntry.Value)
+    if ([String]::IsNullOrEmpty($forceItemName) -eq $false) {
+        $newItemName = $forceItemName
+    }
+    $newItem = New-Item -Parent $SitecoreContextItem -Name $newItemName -ItemType $selectedTemplateId    
+    
+    $newItem.Editing.BeginEdit()
+    foreach($fieldEntry in $jsonMessage){
+        $fieldName = $fieldEntry.FieldName
+        $generatedValue = $fieldEntry.Value
+        $newItem[$fieldName] = $generatedValue
+    }
+    $newItem.Editing.EndEdit()
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20240826T131422Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "8e68606c-9012-4494-b960-0cee1dd4aa99"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20240828T150245Z

@@ -1,0 +1,11 @@
+{
+    "namespace": "ModuleName",
+    "items": {
+        "includes": [
+			{
+				"name": "ModuleName.Path",
+				"path": "/sitecore/system/Settings/..."
+			}
+		]
+	}
+}

@@ -1,0 +1,1 @@
+dotnet sitecore login --authority https://sc10identityserver.dev.local --cm https://sc10sc.dev.local --allow-write true

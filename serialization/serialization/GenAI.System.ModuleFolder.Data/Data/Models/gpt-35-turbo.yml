@@ -1,0 +1,34 @@
+﻿---
+ID: "1ed20b1b-cc0d-49ec-a992-d4025ac4bc6b"
+Parent: "ed8f98b9-88f9-400d-82cd-fb567c4013ea"
+Template: "48b9c4d5-e7e3-49ab-b427-fab04868d552"
+Path: "/sitecore/system/Modules/GenAI/Data/Models/gpt-35-turbo"
+SharedFields:
+- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
+  Hint: __Sortorder
+  Value: 100
+Languages:
+- Language: en
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: GPT 3.5 Turbo
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20240517T125030Z
+    - ID: "8203da3b-fcfa-42a6-9ae3-e1ca6d09c909"
+      Hint: API Key
+      Value: "gpt-3.5-turbo"
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "631b1761-5cac-4d8a-ae46-58c827e3d573"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20240827T173114Z

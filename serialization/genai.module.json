@@ -1,0 +1,30 @@
+{
+  "namespace": "GenAI",
+  "items": {
+    "includes": [
+      {
+        "name": "GenAI.System.ModuleFolder.Data",
+        "path": "/sitecore/system/Modules/GenAI/Data"
+      },
+      {
+        "name": "GenAI.System.ModuleFolder.Settings",
+        "path": "/sitecore/system/Modules/GenAI/Settings",
+        "scope": "ItemAndChildren"
+      },
+      {
+        "name": "GenAI.System.Scripts",
+        "path": "/sitecore/system/Modules/PowerShell/Script Library/GenAI"
+      },
+      {
+        "name": "GenAI.Templates.Module",
+        "path": "/sitecore/templates/Modules/GenAI"
+      }
+    ],
+    "excludedFields": [
+      {
+        "fieldID": "{0AE1B6E0-CE2B-4079-BCC9-302851E9522A}",
+        "description": "API Key"
+      }
+    ]
+  }
+}

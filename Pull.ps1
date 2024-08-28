@@ -1,0 +1,1 @@
+dotnet sitecore ser pull

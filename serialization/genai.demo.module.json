@@ -1,0 +1,11 @@
+{
+  "namespace": "GenAI.Demo",
+  "items": {
+    "includes": [
+      {
+        "name": "GenAI.Demo.System.Workflow",
+        "path": "/sitecore/system/Workflows/Sample GenAI Content Workflow"
+      }
+    ]
+  }
+}

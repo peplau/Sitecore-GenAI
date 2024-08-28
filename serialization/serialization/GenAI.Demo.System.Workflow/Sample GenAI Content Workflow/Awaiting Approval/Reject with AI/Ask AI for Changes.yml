@@ -1,0 +1,47 @@
+﻿---
+ID: "c20e4e0e-8c5b-458d-b3d8-5ee9c9c3084e"
+Parent: "88d67c22-8913-4646-ac97-bbc5cb83042f"
+Template: "02bd31b0-ced3-46f4-ab42-11bdfd8d967c"
+Path: /sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Reject with AI/Ask AI for Changes
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: /~/icon/office/32x32/robot.png
+- ID: "cd8da5e2-3b65-4a14-b7a6-9f41181ce172"
+  Hint: Script
+  Value: 
+- ID: "d51cfe9b-67d9-40c3-9aa7-31456fb9aefb"
+  Hint: EnableRule
+  Value: |
+    <ruleset>
+      <rule
+        uid="{15B0EEEB-CD56-4F33-A986-7B0E33F2FC4D}">
+        <conditions />
+      </rule>
+    </ruleset>
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20240517T193224Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "1d791b04-3a3f-47b5-ba56-3ee269ee4505"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20240828T134847Z
