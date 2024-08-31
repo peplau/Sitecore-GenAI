@@ -54,8 +54,7 @@ SharedFields:
             Description = "Select the template to create new item from";
             Icon = "OfficeWhite/32x32/robot.png";
             Parameters = $parameters;
-            Width = 400;
-            Height = 350;
+            Width = 400; Height = 350;
         }
         $result = Read-Variable @props
         if($result -ne "ok" -or ($result -eq "ok" -and $template -eq $null -and $templateAny -eq $null)) {
@@ -147,6 +146,7 @@ SharedFields:
     }
     $textFieldJson = $textFieldArray | ConvertTo-Json
     $imageFieldJson = $imageFieldArray | ConvertTo-Json
+    $allFieldsJson = $textFieldArray + $imageFieldArray | ConvertTo-Json
     
     $sb = New-Object -TypeName "System.Text.StringBuilder"
     [void]$sb.AppendLine("You will help a Sitecore Content Editor to generate content for an item of a given Template")
@@ -160,12 +160,15 @@ SharedFields:
     [void]$sb.AppendLine("OUTPUT: Generated content (JSON)")
     [void]$sb.AppendLine("- Skip any explanations, output the JSON and nothing else")
     [void]$sb.AppendLine("- Match content with field types: Short text for 'Single-Line Text', Long text for 'Multi-Line Text', Basic HTML markup for 'Rich Text'")
-    [void]$sb.AppendLine("Example of valid output: [{FieldName:'Field1', Value:'Content'},{FieldName:'Field2', Value:'Content'}]")
+    [void]$sb.AppendLine("- Image fields, return the prompt to be used for the Image Generation")
+    [void]$sb.AppendLine("- Image fields should also return extra properties - Property:'Tags' (Comma-separated list of tags for the image) - Property:'Dimensions' (Must be one of: '256x256', '512x512', '1024x1024', '1024x1792', '1792x1024')")
+    
+    [void]$sb.AppendLine("Example of valid output: [{FieldName:'Field1', Value:'Content', Tags:'Tag1,Tag2'},{FieldName:'Image', Value:'Prompt', Tags:'Tag1,Tag2', Dimensions:'1024x1024'}]")
     $systemPrompt = $sb.ToString()
     
     $sb = New-Object -TypeName "System.Text.StringBuilder"
     [void]$sb.AppendLine("- Template: $($templateName)")
-    [void]$sb.AppendLine("- Fields: $($textFieldJson)")
+    [void]$sb.AppendLine("- Fields: $($allFieldsJson)")
     [void]$sb.AppendLine("- Length: $($lenght)")
     [void]$sb.AppendLine("- Tone: $($tone)")
     [void]$sb.AppendLine("- Keywords: $($keywords)")
@@ -176,6 +179,41 @@ SharedFields:
     # --------------------------
     # Content Generation Itself
     # --------------------------
+    
+    function Get-MessageFromGpt(){
+        param( $system, $user, $apiKey, $model)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+            "Authorization" = "Bearer $($apiKey)"
+        }
+        $requestData = @{
+            model = $model
+            messages = @(
+                @{
+                    role = "system"
+                    content = $system
+                },
+                @{
+                    role = "user"
+                    content = $user
+                }
+            )
+            max_tokens = 1000
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri "https://api.openai.com/v1/chat/completions" -Method Post -Headers $headers -Body $body
+            $responseData = $response.choices[0].message.content
+            return $responseData
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
     $messageFromGpt = Get-MessageFromGpt $systemPrompt $userPrompt $apiKey $model
     $messageFromGpt = $messageFromGpt.Replace('```json','').Replace('```]','').Replace('```','')
     $jsonMessage = $messageFromGpt | ConvertFrom-Json
@@ -194,9 +232,39 @@ SharedFields:
     foreach($fieldEntry in $jsonMessage){
         $fieldName = $fieldEntry.FieldName
         $generatedValue = $fieldEntry.Value
-        $newItem[$fieldName] = $generatedValue
+        # Only save text fields
+        $imageField = $imageFieldArray | Where-Object { $_.Field -eq $fieldName } | Select-Object -First 1
+        if ($imageField -eq $null){
+            $newItem[$fieldName] = $generatedValue
+        }
     }
     $newItem.Editing.EndEdit()
+    
+    # --------------------------------------
+    # Generate Images and save 
+    # --------------------------------------
+    
+    if ($imageFieldArray.Count -gt 0) {
+        
+        $authToken = $null
+    
+        foreach($fieldEntry in $jsonMessage){
+            $fieldName = $fieldEntry.FieldName
+            $generatedValue = $fieldEntry.Value
+            $imageField = $imageFieldArray | Where-Object { $_.Field -eq $fieldName } | Select-Object -First 1
+            if ($imageField -ne $null){
+                $imagePrompt = "$($generatedValue) (Tone: $($tone))"
+                $newImageName = "$($generatedValue).png"
+                $dimensions = $fieldEntry.Dimensions
+                $tags = $fieldEntry.Tags
+                
+                # Generate image
+                #$newImageUrl = Generate-NewImage $imagePrompt $dimensions $apiKey
+                
+                # Generate image and Upload Asset to Content Hub ----
+            }
+        }
+    }
 Languages:
 - Language: en
   Versions:
@@ -215,11 +283,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "8e68606c-9012-4494-b960-0cee1dd4aa99"
+      Value: "9542720c-735d-4e50-bf00-796468c926c2"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240828T150245Z
+      Value: 20240831T214746Z

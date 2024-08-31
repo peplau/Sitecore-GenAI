@@ -33,6 +33,15 @@ SharedFields:
         return Get-FieldValue $modelItem $GenAI_ModelKey_FieldName $null
     }
     
+    function Get-FieldValue(){
+        param( $item, $fieldName, $defaultValue = "" )
+        $field = $item.Fields[$fieldName]
+        if ($field -eq $null){
+            return $defaultValue
+        }
+        return $field.Value
+    }
+    
     function Get-MessageFromGpt(){
         param( $system, $user, $apiKey, $model)
         
@@ -66,13 +75,151 @@ SharedFields:
         }    
     }
     
-    function Get-FieldValue(){
-        param( $item, $fieldName, $defaultValue = "" )
-        $field = $item.Fields[$fieldName]
-        if ($field -eq $null){
-            return $defaultValue
+    function Generate-NewImage(){
+        param( $prompt, $size, $apiKey)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+            "Authorization" = "Bearer $($apiKey)"
         }
-        return $field.Value
+        $requestData = @{
+            model = "dall-e-3"
+            prompt = $prompt
+            size = $size
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri "https://api.openai.com/v1/images/generations" -Method Post -Headers $headers -Body $body
+            $newImageUrl = $response.data[0].url
+            return $newImageUrl
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
+    function Get-CHToken(){
+        param( $baseUrl, $username, $password)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+        }
+        $requestData = @{
+            user_name = $username
+            password = $password
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri "$($baseUrl)/api/authenticate" -Method Post -Headers $headers -Body $body
+            $token = $response.token
+            return $token
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
+    function Start-Upload(){
+        param($baseUrl, $token, $fileName, $fileSize)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+            "X-Auth-Token" = $token
+        }
+        $requestData = @{
+            file_name = $fileName
+            file_size = $fileSize
+            upload_configuration = @{
+                name = "AssetUploadConfiguration"
+                parameters = $null
+            }
+            action = @{
+                name = "NewAsset"
+                parameters = $null
+            }
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-WebRequest -Uri "$($baseUrl)/api/v2.0/upload" -Method Post -Headers $headers -Body $body -UseBasicParsing
+            $content = $response.Content | ConvertFrom-Json
+    
+            return @{
+                upload_identifier = $content.upload_identifier
+                file_identifier = $content.file_identifier
+                upload_url = $response.Headers.Location
+            }
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
+    function Process-Upload(){
+        param($startUploadReturn, $token, $file, $fileName)
+    
+        $headers = @{
+            "X-Auth-Token" = $token
+        }
+        
+        $boundary = [System.Guid]::NewGuid().ToString()
+        $FilePath = $file.FullName
+        $TheFile = [System.IO.File]::ReadAllBytes($FilePath)
+        $TheFileContent = [System.Text.Encoding]::GetEncoding('iso-8859-1').GetString($TheFile)
+        
+        $LF = "`r`n"
+        $bodyLines = (
+            "--$boundary",
+            "Content-Disposition: form-data; name=`"TheFile`"; filename=`"file.json`"",
+            "Content-Type: application/json$LF",
+            $TheFileContent,
+            "--$boundary--$LF"
+        ) -join $LF
+        
+        try {
+            # Send the request
+            $response = Invoke-RestMethod -Uri $startUploadReturn.upload_url -Method Post -Headers $headers -ContentType "multipart/form-data; boundary=`"$boundary`"" -Body $bodyLines
+            return @{
+                success = $response.success
+                message = $response.message
+            }
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
+    function Finalize-Upload(){
+        param($baseUrl, $startUploadReturn, $token)
+        $headers = @{
+            "Content-Type" = "application/json"
+            "X-Auth-Token" = $token
+        }
+        $requestData = @{
+            upload_identifier = $startUploadReturn.upload_identifier
+            file_identifier = $startUploadReturn.file_identifier
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri "$($baseUrl)/api/v2.0/upload/finalize" -Method Post -Headers $headers -Body $body
+            return @{
+                success = $response.success
+                message = $response.message
+                asset_id = $response.asset_id
+                asset_identifier = $response.asset_identifier
+            }
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
     }
 Languages:
 - Language: en
@@ -92,11 +239,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "9090557c-c6e6-4c1a-8ef2-86b2e36b1ee9"
+      Value: "600d8e64-9ab9-42be-b636-c03351a51885"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240828T145815Z
+      Value: 20240831T214232Z

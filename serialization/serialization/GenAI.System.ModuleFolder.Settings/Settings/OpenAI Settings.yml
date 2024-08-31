@@ -13,11 +13,14 @@ Languages:
       Value: 20240517T130902Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "5f3389a5-8467-4bb0-9e56-956ca5855a94"
+      Value: "059604d4-9b23-420e-b441-067eac985f44"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
+    - ID: "d48c2e63-7717-457f-9625-c73473322e0b"
+      Hint: Model
+      Value: "{F10B743F-5A8D-4FD9-9490-2F645D06B4EC}"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240827T190244Z
+      Value: 20240830T190841Z
