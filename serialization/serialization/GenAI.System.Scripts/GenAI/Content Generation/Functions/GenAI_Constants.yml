@@ -8,10 +8,14 @@ SharedFields:
   Hint: Script
   Value: |
     $GenAI_OpenAISettings_TemplateID = "{87B253EB-2F25-46A3-B27B-51D4CE85AC7B}" 
+    $GenAI_ContentHubSettings_TemplateID = "{5E1B161E-4BE9-46A8-84DC-4CEEB63AC84D}" 
     $GenAI_Settings_Path = "/sitecore/system/Modules/GenAI/Settings" 
     $GenAI_ApiKey_FieldName = "API Key" 
     $GenAI_Model_FieldName = "Model" 
     $GenAI_ModelKey_FieldName = "Model Key"
+    $GenAI_BaseURL_FieldName = "Base URL"
+    $GenAI_Username_FieldName = "Username"
+    $GenAI_Password_FieldName = "Password"
 Languages:
 - Language: en
   Versions:
@@ -30,11 +34,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "db79fea7-1f06-4511-a247-3ba7eb66bbc4"
+      Value: "985940e4-9d06-4cbd-853e-eae677f91eb1"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240828T143828Z
+      Value: 20240831T221853Z

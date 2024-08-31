@@ -24,6 +24,18 @@
       {
         "fieldID": "{0AE1B6E0-CE2B-4079-BCC9-302851E9522A}",
         "description": "API Key"
+      },
+      {
+        "fieldID": "cdd78582-6d36-48c7-ab75-f2c0631ffd0f",
+        "description": "Base URL"
+      },
+      {
+        "fieldID": "ada9740a-c7d2-436b-88d0-780d2d4c2776",
+        "description": "Username"
+      },
+      {
+        "fieldID": "151dbca8-0231-4f0b-97c1-669324a7aaeb",
+        "description": "Password"
       }
     ]
   }
