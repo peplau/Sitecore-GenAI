@@ -23,7 +23,15 @@ SharedFields:
     
     function Get-OpenAISettings {
         $settings = Get-Item -Path master: -Query "$($GenAI_Settings_Path)//*[@@templateid='$($GenAI_OpenAISettings_TemplateID)']"
-        return $settings;
+        if ($settings -eq $null){
+            return $null
+        }
+        $apiKey = Get-OpenAIApiKey $settings
+        $model = Get-OpenAIModel $settings
+        return @{
+            apiKey = $apiKey
+            model = $model
+        };
     }
     
     function Get-OpenAIApiKey(){
@@ -251,11 +259,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2a0fec5b-7c4b-4c19-93dd-755d0139b3e3"
+      Value: "ea3d204b-0171-4c5d-8379-2207c02e4528"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240831T223141Z
+      Value: 20240901T144410Z

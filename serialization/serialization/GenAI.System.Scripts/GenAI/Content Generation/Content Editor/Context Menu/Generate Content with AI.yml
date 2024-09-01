@@ -17,19 +17,19 @@ SharedFields:
     # -------------------
     
     # Get OpenAISettings - No OpenAISettings item
-    $settingsItem = Get-OpenAISettings
-    if ($settingsItem -eq $null){
+    $settingsResult = Get-OpenAISettings
+    if ($settingsResult -eq $null){
         Write-Log "[GenAI] You must setup your OpenAISettings item" -Log Error
         Close-Window
     }
     # APIKey - No APIKey is set
-    $apiKey = Get-OpenAIApiKey $settingsItem
+    $apiKey = $settingsResult.apiKey
     if ([string]::IsNullOrEmpty($apiKey) -eq $true){
         Write-Log "[GenAI] You must setup your 'API Key' in the OpenAISettings item" -Log Error
         Close-Window
     }
     # Get Model - No Model is set
-    $model = Get-OpenAIModel $settingsItem
+    $model = $settingsResult.model
     if ([string]::IsNullOrEmpty($model) -eq $true){
         Write-Log "[GenAI] You must setup your 'Model' at the OpenAISettings item" -Log Error
         Close-Window
@@ -219,6 +219,15 @@ SharedFields:
             $generatedValue = $fieldEntry.Value
             $imageField = $imageFieldArray | Where-Object { $_.Field -eq $fieldName } | Select-Object -First 1
             if ($imageField -ne $null){
+                
+                if ($contentHubSettings -eq $null){
+                    $contentHubSettings = Get-ContentHubSettings
+                }
+                if ($authToken -eq $null){
+                    $authToken = Get-CHToken $contentHubSettings.baseUrl $contentHubSettings.username $contentHubSettings.password
+                }
+                
+                # Generate image and Upload Asset to Content Hub ----
                 $imagePrompt = "$($generatedValue) (Tone: $($tone))"
                 $newImageName = "$($generatedValue).png"
                 $dimensions = $fieldEntry.Dimensions
@@ -227,19 +236,8 @@ SharedFields:
                 # Generate image
                 $newImageUrl = Generate-NewImage $imagePrompt $dimensions $apiKey
                 
-                # Generate image and Upload Asset to Content Hub ----
-                if ($contentHubSettings -eq $null){
-                    $contentHubSettings = Get-ContentHubSettings
-                }
-    
-                # Get auth token
-                if ($authToken -eq $null){
-                    $authToken = Get-CHToken $contentHubSettings.baseUrl $contentHubSettings.username $contentHubSettings.password
-                }
-                
                 # Get image binary from URL
                 $tempFilePath = [Sitecore.IO.FileUtil]::MapPath([Sitecore.Configuration.Settings]::TempFolderPath) +"\"+[System.IO.Path]::GetFileName([System.IO.Path]::GetTempFileName()) + ".png"
-                
                 Invoke-WebRequest -Uri $newImageUrl -OutFile $tempFilePath -UseBasicParsing 
                 $imageFile = Get-Item $tempFilePath
                 $size = $imageFile.Length
@@ -253,7 +251,9 @@ SharedFields:
                 # Finalize upload
                 $finalizeUploadReturn = Finalize-Upload $contentHubSettings.baseUrl $startUploadReturn $authToken
                 $success = $finalizeUploadReturn.sucess
-                $assetId = $finalizeUploadReturn.asset_id            
+                $assetId = $finalizeUploadReturn.asset_id
+                
+                $i = 0
             }
         }
     }
@@ -275,11 +275,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "32bd64c5-bdef-4f8b-ab5c-7f91610e2f0a"
+      Value: "a8eee6a5-35bd-4b9b-8a25-e12b3ba6ee40"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240831T223833Z
+      Value: 20240901T162102Z
