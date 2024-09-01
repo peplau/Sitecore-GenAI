@@ -1,0 +1,1 @@
+dotnet sitecore plugin add -n Sitecore.DevEx.Extensibility.XMCloud

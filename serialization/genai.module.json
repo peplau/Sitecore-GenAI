@@ -3,6 +3,10 @@
   "items": {
     "includes": [
       {
+        "name": "GenAI.System.ModuleFolder",
+        "path": "/sitecore/system/Modules/GenAI"
+      },
+      {
         "name": "GenAI.System.ModuleFolder.Data",
         "path": "/sitecore/system/Modules/GenAI/Data"
       },
