@@ -241,6 +241,70 @@ SharedFields:
             return $null
         }    
     }
+    
+    function Generate-PublicLink(){
+        param($baseUrl, $assetId, $token)
+        $headers = @{
+            "Content-Type" = "application/json"
+            "X-Auth-Token" = $token
+        }
+        $requestData = @{
+            properties = @{
+                RelativeUrl = [System.Guid]::NewGuid().ToString().Replace("{","").Replace("}","").Replace("-","")
+                Resource = "downloadOriginal"
+                ExpirationDate = (Get-Date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+                ConversionConfiguration = @{}
+            }
+            is_root_taxonomy_item = $false
+            is_path_root = $false
+            inherits_security = $true
+            entitydefinition = @{
+                href = "$($baseUrl)/api/entitydefinitions/M.PublicLink"
+            }
+            relations = @{
+                AssetToPublicLink = @{
+                    parents = @(
+                        @{
+                            href = "$($baseUrl)/api/entities/$assetId"                                
+                        }
+                    )
+                }
+            }
+        }
+        $body = $requestData | ConvertTo-Json -Depth 5
+        
+        try {
+            $response = Invoke-RestMethod -Uri "$($baseUrl)/api/entitydefinitions/M.PublicLink/entities" -Method Post -Headers $headers -Body $body
+            return @{
+                id = $response.id
+                identifier = $response.identifier
+            }
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
+    
+    function Get-PublicLinkUrl(){
+        param($baseUrl, $publicLinkId, $token)
+        $headers = @{
+            "Content-Type" = "application/json"
+            "X-Auth-Token" = $token
+        }
+        try {
+            $response = Invoke-RestMethod -Uri "$($baseUrl)/api/entities/$($publicLinkId)" -Method Get -Headers $headers
+            if($response.properties.Status -ne "Completed"){
+                Start-Sleep -Seconds 2
+                return Get-PublicLinkUrl $baseUrl $publicLinkId $token
+            }
+            return $response.public_link
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
 Languages:
 - Language: en
   Versions:
@@ -259,11 +323,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "ea3d204b-0171-4c5d-8379-2207c02e4528"
+      Value: "7e6305b7-d6bf-4c8d-8686-d1eb2a2e24f4"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240901T144410Z
+      Value: 20240901T205603Z

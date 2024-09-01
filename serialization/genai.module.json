@@ -3,6 +3,10 @@
   "items": {
     "includes": [
       {
+        "name": "GenAI.Templates.Module",
+        "path": "/sitecore/templates/Modules/GenAI"
+      },
+      {
         "name": "GenAI.System.ModuleFolder",
         "path": "/sitecore/system/Modules/GenAI"
       },
@@ -18,10 +22,6 @@
       {
         "name": "GenAI.System.Scripts",
         "path": "/sitecore/system/Modules/PowerShell/Script Library/GenAI"
-      },
-      {
-        "name": "GenAI.Templates.Module",
-        "path": "/sitecore/templates/Modules/GenAI"
       }
     ],
     "excludedFields": [

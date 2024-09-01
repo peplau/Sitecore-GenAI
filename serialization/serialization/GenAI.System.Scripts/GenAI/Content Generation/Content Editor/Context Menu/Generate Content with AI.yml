@@ -252,8 +252,23 @@ SharedFields:
                 $finalizeUploadReturn = Finalize-Upload $contentHubSettings.baseUrl $startUploadReturn $authToken
                 $success = $finalizeUploadReturn.sucess
                 $assetId = $finalizeUploadReturn.asset_id
+                $assetIdentifier = $finalizeUploadReturn.asset_identifier
                 
-                $i = 0
+                # Generate Public Link
+                $generateLinkResult = Generate-PublicLink $contentHubSettings.baseUrl $assetId $authToken
+                $publicLinkUrl = Get-PublicLinkUrl $contentHubSettings.baseUrl $generateLinkResult.id $authToken
+                
+                # Image dimensions
+                Add-Type -AssemblyName System.Drawing
+                $image = [System.Drawing.Image]::FromFile($tempFilePath)
+                $width = $image.Width
+                $height = $image.Height            
+                
+                # Save on Item Field
+                $newItem.Editing.BeginEdit()
+                $imgValue = "<image src=""" + $publicLinkUrl + """ dam-id="""+$assetIdentifier+""" width="""+$width+""" height="""+$height+""" alt="""+$imagePrompt+""" dam-content-type=""Image"" thumbnailsrc="""+$contentHubSettings.baseUrl+"/api/gateway/"+$assetId+"/thumbnail"" />"
+                $newItem[$fieldName] = $imgValue
+                $newItem.Editing.EndEdit()            
             }
         }
     }
@@ -275,11 +290,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "a8eee6a5-35bd-4b9b-8a25-e12b3ba6ee40"
+      Value: "2163b3fe-d8f6-4a81-93f5-027468cca9cb"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240901T162102Z
+      Value: 20240901T205406Z
