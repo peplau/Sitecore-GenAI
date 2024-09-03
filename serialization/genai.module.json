@@ -59,6 +59,10 @@
       {
         "fieldID": "a353e334-b781-48c0-8218-0f8cc5735e64",
         "description": "GraphQL Client Secret"
+      },
+      {
+        "fieldID": "907ac4b8-e842-4586-be89-39c6c2e8aa0d",
+        "description": "Generate Image Endpoint"
       }
     ]
   }

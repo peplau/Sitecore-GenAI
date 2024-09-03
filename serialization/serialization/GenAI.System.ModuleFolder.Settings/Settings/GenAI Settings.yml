@@ -16,10 +16,7 @@ Languages:
       Value: 20240517T130902Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "aba5d1f2-7982-4e59-9280-f7a1190e880d"
-    - ID: "907ac4b8-e842-4586-be89-39c6c2e8aa0d"
-      Hint: Generate Image Endpoint
-      Value: "https://webhooks.workato.com/webhooks/rest/ef55a393-1415-4e19-89e9-41e605de7792/generateimage"
+      Value: "0db69eb1-8812-4d12-8a6f-a8156397906e"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
@@ -29,4 +26,4 @@ Languages:
       Value: "{F10B743F-5A8D-4FD9-9490-2F645D06B4EC}"
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240903T164332Z
+      Value: 20240903T194926Z

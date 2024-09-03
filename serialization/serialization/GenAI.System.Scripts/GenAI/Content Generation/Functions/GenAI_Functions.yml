@@ -84,6 +84,7 @@ SharedFields:
             return $responseData
         }
         catch {
+            Write-Host $_.Exception.Message
             return $null
         }    
     }
@@ -403,11 +404,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "eb85a99c-e206-433e-b574-a85b32b10d46"
+      Value: "02d4cc07-3429-4b32-8ed5-85dce9cec586"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240903T165804Z
+      Value: 20240903T193700Z
