@@ -9,35 +9,28 @@ SharedFields:
   Value: |
     Import-Function -Name GenAI_Constants
     
-    function Get-ContentHubSettings {
-        $settings = Get-Item -Path master: -Query "$($GenAI_Settings_Path)//*[@@templateid='$($GenAI_ContentHubSettings_TemplateID)']"
+    function Get-GenAISettings {
+        $settings = Get-Item -Path master: -Query "$($GenAI_Settings_Path)//*[@@templateid='$($GenAI_Settings_TemplateID)']"
         if ($settings -eq $null){
             return $null
         }
+        $model = Get-OpenAIModel $settings
+        $baseUrl = $settings[$GenAI_BaseURL_FieldName]
+        if ($baseUrl.EndsWith("/")){
+            $baseUrl = $baseUrl.Substring(0,$baseUrl.Length-1);
+        }
         return @{
-            baseUrl = $settings[$GenAI_BaseURL_FieldName]
+            apiKey = $settings[$GenAI_ApiKey_FieldName]
+            model = $model
+            baseUrl = $baseUrl
             username = $settings[$GenAI_Username_FieldName]
             password = $settings[$GenAI_Password_FieldName]
+            useConnect = $settings[$GenAI_UseSitecoreConnect_FieldName]
+            generateImageEndpoint = $settings[$GenAI_GenerateImageEndpoint_FieldName]
+            graphQlBaseUrl = $settings[$GenAI_GraphQlBaseUrl_FieldName]
+            graphQlClientId = $settings[$GenAI_GraphQlClientId_FieldName]
+            graphQlClientSecret = $settings[$GenAI_GraphQlClientSecret_FieldName]
         };
-    }
-    
-    function Get-OpenAISettings {
-        $settings = Get-Item -Path master: -Query "$($GenAI_Settings_Path)//*[@@templateid='$($GenAI_OpenAISettings_TemplateID)']"
-        if ($settings -eq $null){
-            return $null
-        }
-        $apiKey = Get-OpenAIApiKey $settings
-        $model = Get-OpenAIModel $settings
-        return @{
-            apiKey = $apiKey
-            model = $model
-        };
-    }
-    
-    function Get-OpenAIApiKey(){
-        param( $settingsItem )
-        $apiKey = Get-FieldValue $settingsItem $GenAI_ApiKey_FieldName $null
-        return $apiKey
     }
     
     function Get-OpenAIModel(){
@@ -305,6 +298,93 @@ SharedFields:
             return $null
         }    
     }
+    
+    function Submit-AssetForReview(){
+        param($baseUrl, $assetId, $token)
+        $headers = @{
+            "Content-Type" = "application/json"
+            "X-Auth-Token" = $token
+        }
+        try {
+            Invoke-RestMethod -Uri "$($baseUrl)/api/entities/$($assetId)/lifecycle/submit" -Method Post -Headers $headers
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }
+    }
+    
+    function Generate-ImageSync(){
+        param( $item, $imagePrompt, $newImageName, $dimensions, $apiKey, $settings, $authToken )
+        
+        # Generate image
+        $newImageUrl = Generate-NewImage $imagePrompt $dimensions $apiKey
+        
+        # Get image binary from URL
+        $tempFilePath = [Sitecore.IO.FileUtil]::MapPath([Sitecore.Configuration.Settings]::TempFolderPath) +"\"+[System.IO.Path]::GetFileName([System.IO.Path]::GetTempFileName()) + ".png"
+        Invoke-WebRequest -Uri $newImageUrl -OutFile $tempFilePath -UseBasicParsing 
+        $imageFile = Get-Item $tempFilePath
+        $size = $imageFile.Length
+        
+        # Start upload
+        $startUploadReturn = Start-Upload $settings.baseUrl $authToken $newImageName $size
+        
+        # Process upload
+        $processUploadReturn = Process-Upload $startUploadReturn $authToken $imageFile $newImageName
+        
+        # Finalize upload
+        $finalizeUploadReturn = Finalize-Upload $settings.baseUrl $startUploadReturn $authToken
+        $success = $finalizeUploadReturn.sucess
+        $assetId = $finalizeUploadReturn.asset_id
+        $assetIdentifier = $finalizeUploadReturn.asset_identifier
+        
+        # Generate Public Link
+        $generateLinkResult = Generate-PublicLink $settings.baseUrl $assetId $authToken
+        $publicLinkUrl = Get-PublicLinkUrl $settings.baseUrl $generateLinkResult.id $authToken
+        
+        # Modify Status to "UnderReview"
+        Submit-AssetForReview $settings.baseUrl $assetId $authToken
+        
+        # Image dimensions
+        Add-Type -AssemblyName System.Drawing
+        $image = [System.Drawing.Image]::FromFile($tempFilePath)
+        $width = $image.Width
+        $height = $image.Height            
+        
+        # Save on Item Field
+        $item.Editing.BeginEdit()
+        $imgValue = "<image src=""" + $publicLinkUrl + """ dam-id="""+$assetIdentifier+""" width="""+$width+""" height="""+$height+""" alt="""+$imagePrompt+""" dam-content-type=""Image"" thumbnailsrc="""+$settings.baseUrl+"/api/gateway/"+$assetId+"/thumbnail"" />"
+        $item[$fieldName] = $imgValue
+        $item.Editing.EndEdit()
+    }
+    
+    function Generate-ImageAsync(){
+        param( $itemId, $imagePrompt, $dimensions, $fieldName, $settings)
+        
+        $headers = @{
+            "Content-Type" = "application/json"
+        }
+        $requestData = @{
+            itemId = $itemId
+            prompt = $imagePrompt
+            dimensions = $dimensions
+            fieldName = $fieldName
+            graphQlBaseUrl = $settings.graphQlBaseUrl
+            graphQlClientId = $settings.graphQlClientId
+            graphQlClientSecret = $settings.graphQlClientSecret
+        }
+        $body = $requestData | ConvertTo-Json -Depth 3
+        
+        try {
+            $response = Invoke-RestMethod -Uri $settings.generateImageEndpoint -Method Post -Headers $headers -Body $body
+            $success = ($response -ne $null -and $response.status -eq "ok")
+            return $success
+        }
+        catch {
+            Write-Host $_.Exception.Message
+            return $null
+        }    
+    }
 Languages:
 - Language: en
   Versions:
@@ -323,11 +403,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "7e6305b7-d6bf-4c8d-8686-d1eb2a2e24f4"
+      Value: "eb85a99c-e206-433e-b574-a85b32b10d46"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240901T205603Z
+      Value: 20240903T165804Z

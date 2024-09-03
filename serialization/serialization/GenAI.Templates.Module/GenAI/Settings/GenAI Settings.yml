@@ -2,7 +2,7 @@
 ID: "87b253eb-2f25-46a3-b27b-51d4ce85ac7b"
 Parent: "37f4ffd2-a6e3-4110-a103-b343cc7c90ed"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
-Path: /sitecore/templates/Modules/GenAI/Settings/OpenAI Settings
+Path: /sitecore/templates/Modules/GenAI/Settings/GenAI Settings
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
@@ -31,11 +31,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "992ae045-2114-42c7-a054-76b54e35becc"
+      Value: "ad213179-e41b-4735-a91f-59e1820a6520"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240827T172620Z
+      Value: 20240903T125647Z

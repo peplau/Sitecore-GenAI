@@ -1,15 +1,15 @@
 ﻿---
-ID: "151dbca8-0231-4f0b-97c1-669324a7aaeb"
-Parent: "1b69a69c-a123-42cc-ba7b-6aa70bde600e"
+ID: "1e06b01e-6fba-4978-a86d-6782c9f5da67"
+Parent: "3f2bc65e-c90d-46f3-a346-a83f880c1a23"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: /sitecore/templates/Modules/GenAI/Settings/Content Hub Settings/Content Hub Settings/Password
+Path: /sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/GraphQL Client ID
 SharedFields:
 - ID: "ab162cc0-dc80-4abf-8871-998ee5d7ba32"
   Hint: Type
-  Value: Password
+  Value: "Single-Line Text"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 300
+  Value: 100
 Languages:
 - Language: en
   Versions:
@@ -17,22 +17,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20240831T221642Z
+      Value: 20240903T130727Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "6e21bd17-280a-4086-bbae-b605406b7835"
+      Value: "0e700841-1e88-4b45-9a2b-40be716e66f9"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240831T222143Z
+      Value: 20240903T133042Z

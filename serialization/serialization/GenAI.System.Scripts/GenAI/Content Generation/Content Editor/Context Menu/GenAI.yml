@@ -1,18 +1,12 @@
 ﻿---
-ID: "c20e4e0e-8c5b-458d-b3d8-5ee9c9c3084e"
-Parent: "88d67c22-8913-4646-ac97-bbc5cb83042f"
-Template: "02bd31b0-ced3-46f4-ab42-11bdfd8d967c"
-Path: /sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Reject with AI/Ask AI for Changes
+ID: "1106b4db-c460-4a15-8d92-fdb0eaf46ce6"
+Parent: "59f1cf29-88a0-46af-b652-0ce819de866e"
+Template: "ab154d3d-1126-4ab4-ac21-8b86e6bd70ea"
+Path: /sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI
 SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
-  Value: /~/icon/office/32x32/robot.png
-- ID: "cd8da5e2-3b65-4a14-b7a6-9f41181ce172"
-  Hint: Script
-  Value: "{BC7B52DF-221D-46DA-BBAB-9E2052D05E5D}"
-- ID: "d51cfe9b-67d9-40c3-9aa7-31456fb9aefb"
-  Hint: EnableRule
-  Value: <ruleset />
+  Value: Office/32x32/robot.png
 Languages:
 - Language: en
   Versions:
@@ -20,22 +14,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20240517T193224Z
+      Value: 20240901T210201Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "08a3a7d1-b773-46b2-bbad-8e1536cbb843"
+      Value: "3dd5201b-2ffe-4bca-85b4-6bf581f07d76"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240902T001348Z
+      Value: 20240901T210317Z

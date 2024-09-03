@@ -8,11 +8,18 @@
       },
       {
         "name": "GenAI.System.ModuleFolder",
-        "path": "/sitecore/system/Modules/GenAI"
+        "path": "/sitecore/system/Modules/GenAI",
+        "scope": "SingleItem"
       },
       {
         "name": "GenAI.System.ModuleFolder.Data",
-        "path": "/sitecore/system/Modules/GenAI/Data"
+        "path": "/sitecore/system/Modules/GenAI/Data",
+        "scope": "SingleItem"
+      },
+      {
+        "name": "GenAI.System.ModuleFolder.Data.Models",
+        "path": "/sitecore/system/Modules/GenAI/Data/Models",
+        "scope": "ItemAndChildren"
       },
       {
         "name": "GenAI.System.ModuleFolder.Settings",
@@ -26,7 +33,7 @@
     ],
     "excludedFields": [
       {
-        "fieldID": "{0AE1B6E0-CE2B-4079-BCC9-302851E9522A}",
+        "fieldID": "0ae1b6e0-ce2b-4079-bcc9-302851e9522a",
         "description": "API Key"
       },
       {
@@ -40,6 +47,18 @@
       {
         "fieldID": "151dbca8-0231-4f0b-97c1-669324a7aaeb",
         "description": "Password"
+      },
+      {
+        "fieldID": "ecbf5eab-2ea3-470e-9572-ca03972fd1ca",
+        "description": "GraphQL Base URL"
+      },
+      {
+        "fieldID": "1e06b01e-6fba-4978-a86d-6782c9f5da67",
+        "description": "GraphQL Client ID"
+      },
+      {
+        "fieldID": "a353e334-b781-48c0-8218-0f8cc5735e64",
+        "description": "GraphQL Client Secret"
       }
     ]
   }

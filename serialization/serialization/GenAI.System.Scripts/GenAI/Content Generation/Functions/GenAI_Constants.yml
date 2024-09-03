@@ -7,8 +7,7 @@ SharedFields:
 - ID: "b1a94ff0-6897-47c0-9c51-aa6acb80b1f0"
   Hint: Script
   Value: |
-    $GenAI_OpenAISettings_TemplateID = "{87B253EB-2F25-46A3-B27B-51D4CE85AC7B}" 
-    $GenAI_ContentHubSettings_TemplateID = "{5E1B161E-4BE9-46A8-84DC-4CEEB63AC84D}" 
+    $GenAI_Settings_TemplateID = "{87B253EB-2F25-46A3-B27B-51D4CE85AC7B}" 
     $GenAI_Settings_Path = "/sitecore/system/Modules/GenAI/Settings" 
     $GenAI_ApiKey_FieldName = "API Key" 
     $GenAI_Model_FieldName = "Model" 
@@ -16,6 +15,11 @@ SharedFields:
     $GenAI_BaseURL_FieldName = "Base URL"
     $GenAI_Username_FieldName = "Username"
     $GenAI_Password_FieldName = "Password"
+    $GenAI_UseSitecoreConnect_FieldName = "Use Sitecore Connect"
+    $GenAI_GenerateImageEndpoint_FieldName = "Generate Image Endpoint"
+    $GenAI_GraphQlBaseUrl_FieldName = "GraphQL Base URL"
+    $GenAI_GraphQlClientId_FieldName = "GraphQL Client ID"
+    $GenAI_GraphQlClientSecret_FieldName = "GraphQL Client Secret"
 Languages:
 - Language: en
   Versions:
@@ -34,11 +38,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "985940e4-9d06-4cbd-853e-eae677f91eb1"
+      Value: "8ff313a9-6ba3-4609-9406-a5b2a4b3a359"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240831T221853Z
+      Value: 20240903T135054Z

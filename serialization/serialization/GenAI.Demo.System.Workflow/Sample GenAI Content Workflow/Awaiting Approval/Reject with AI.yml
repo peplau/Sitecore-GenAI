@@ -7,9 +7,12 @@ SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
   Value: office/16x16/delete.png
+- ID: "82a7c02f-9a55-4bfe-b494-d1713d4be9ff"
+  Hint: Suppress Comment
+  Value: 1
 - ID: "dcbebc58-6124-4100-a248-fc717d6c78d5"
   Hint: Next state
-  Value: "{74946C24-7B69-4B36-BB6A-C4D9E8E04E82}"
+  Value: "{9766DA8C-0C01-4DFA-8FA7-8CE796311C8F}"
 - ID: "dec8d2d5-e3cf-48b6-a653-8e69e2716641"
   Hint: __Security
   Value: |
@@ -28,11 +31,11 @@ Languages:
         sitecore\admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "466846b6-cd04-4dc6-a1f9-d67fdd4a0559"
+      Value: "2c4a71b9-b888-418f-87dd-56e2e62d9c68"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\Admin
+        sitecore\rpeplau@arke.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20240818T191146Z
+      Value: 20240902T002151Z
