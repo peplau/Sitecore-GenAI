@@ -89,8 +89,23 @@ After the module is installed and configured, you will see the following scripts
 
 ### USE CASE 1 - Editor creating content with AI
 
-<hr/>
+The video below shows a demo of content being created with help of AI by a content editor
 
 ![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Editor-Create-Content.gif)
 
-<hr/>
+The following steps are shown in the video:
+
+1. Using Content Editor, the content author right clicks the item where the new item is going to be created, then **Scripts > GenAI > Generate Content with AI**;
+
+1. The content author selects the template to be used in the new item creation (Eg: Page);
+
+1. At the **Content** tab, the content author fills the fields:
+    1. **Force Item Name** (optional) - If the field is left empty, the item name will also be generated with AI;
+    1. **What do you want the content to speak about?**
+    1. **Keywords (comma-separated)**
+    1. **Select the length** - Content length to be generated (Headline, Medium or Long)
+    1. **Choose a tone for your text**
+
+1. At the **Template** tab, the author selects the fields to populate with generated content (Text and Image fields are allowed)
+
+After the content is generated, the video shows all text fields populated, but not the image field, which is still being populated asyncronously by Sitecore Connect. After some time, the page is refreshed and the generated image will show up.
