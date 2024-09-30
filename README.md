@@ -89,7 +89,8 @@ After the module is installed and configured, you will see the following scripts
 
 ### USE CASE 1 - Editor creating content with AI
 
-<video width="800" controls>
-  <source src="https://github.com/peplau/Sitecore-GenAI/raw/refs/heads/main/images/videos/Editor-Create-Content.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+<hr/>
+
+![GenAI folder in Content Editor](/images/videos/Editor-Create-Content.gif)
+
+<hr/>
