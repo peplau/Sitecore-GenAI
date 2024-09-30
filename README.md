@@ -109,3 +109,24 @@ The following steps are shown in the video:
 1. At the **Template** tab, the author selects the fields to populate with generated content (Text and Image fields are allowed)
 
 After the content is generated, the video shows all text fields populated, but not the image field, which is still being populated asyncronously by Sitecore Connect. After some time, the page is refreshed and the generated image will show up.
+
+<hr />
+
+### USE CASE 2 - Editor improving content with AI
+
+The video below shows a demo of content being improved with help of AI by a content editor
+
+![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Editor-Improving-Content.gif)
+
+1. Using Content Editor, the content author right clicks the item to be improved, then **Scripts > GenAI > Update Content with AI**;
+
+1. At the **Content** tab, the content author fills the fields:
+    1. **What do you want to change in this content?**
+    1. **Select the length** - Content length to be generated (Headline, Medium or Long)
+    1. **Choose a tone for your text**
+
+1. At the **Template** tab, the author selects the fields to populate with generated content (Text and Image fields are allowed)
+
+<hr />
+
+### USE CASE 3 - Moderator reviewing content in a workflow with AI
