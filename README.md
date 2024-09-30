@@ -9,6 +9,14 @@ Assets can be generated and stored in Content Hub in two ways:
 
 ![Sitecore GenAI Assistant](/images/Sitecore-GenAI-Assistant.png)
 
+1. [Prerequisites](#prerequisites)
+1. [Installation](#installation)
+1. [Configuring the Module](#configuring-the-module)
+1. [Usage Instructions](#usage-instructions)
+    1. [USE CASE 1 - Editor creating content with AI](#use-case-1---editor-creating-content-with-ai)
+    1. [USE CASE 2 - Editor improving content with AI](#use-case-2---editor-improving-content-with-ai)
+    1. [USE CASE 3 - Moderator reviewing content in a workflow with AI](#use-case-3---moderator-reviewing-content-in-a-workflow-with-ai) 
+
 ## Prerequisites
 
 ### Mandatory
@@ -100,7 +108,7 @@ The module comes with a sample workflow called **Sample GenAI Content Workflow**
 ![Sample GenAI Content Workflow](/images/Demo-Workflow.png)
 
 > [!TIP]
-> You can easily integrate the **Ask AI for Changes** action in your custom workflows. To do so, copy the action from to your workflow, or follow the steps below:
+> You can easily integrate the **Ask AI for Changes** action in your custom workflows. To do so, copy the action to your workflow, or follow the steps below:
 > 1. Create a new action item under your workflow command using the template **/sitecore/templates/Modules/PowerShell Console/PowerShell Script Workflow Action**
 > 1. Point the **Script** field to **/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI/Update Content with AI**
 
