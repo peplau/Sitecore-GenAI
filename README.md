@@ -89,4 +89,4 @@ After the module is installed and configured, you will see the following scripts
 
 ### USE CASE 1 - Editor creating content with AI
 
-https://github.com/peplau/Sitecore-GenAI/images/videos/Editor-Create-Content.mp4
+https://github.com/peplau/Sitecore-GenAI/raw/refs/heads/main/images/videos/Editor-Create-Content.mp4
