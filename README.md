@@ -11,10 +11,16 @@ Assets can be generated and stored in Content Hub in two ways:
 
 ## Prerequisites
 
-- Sitecore Content Hub with an OAuth Client [as described here](https://doc.sitecore.com/ch/en/users/content-hub/create-an-oauth-client.html)
-- Sitecore XP, XM or XM Cloud [with DAM connector enabled](https://doc.sitecore.com/xmc/en/developers/xm-cloud/walkthrough--enabling-the-dam-connector-in-an-environment-deployed-to-xm-cloud.html)
+### Mandatory
+
+- Sitecore **Content Hub** with an **OAuth Client** configured [as described here](https://doc.sitecore.com/ch/en/users/content-hub/create-an-oauth-client.html)
+- Sitecore **XP**, **XM** or **XM Cloud** 
 - [Sitecore Powershell Extensions](https://doc.sitecorepowershell.com/installation)
 - [OpenAI API Key](CreatingAPIKeys.md) - Before using the module, you need to configure the OpenAI API Key. If you need help to get your API Key, follow the steps in the [Creating an OpenAI API Key guide](CreatingAPIKeys.md)
+
+### Optional
+- **Sitecore Connect** for Asyncronous image generation. The module works without it, but the Syncronous generation of images makes the experience slower.
+- For a better experience with image selection with **Content Hub**, your **XP**, **XM** or **XM Cloud** must have [enabled the DAM connector as described here](https://doc.sitecore.com/xmc/en/developers/xm-cloud/walkthrough--enabling-the-dam-connector-in-an-environment-deployed-to-xm-cloud.html)
 
 ## Installation
 
@@ -48,6 +54,8 @@ No matter the option selected, after installing the package, you need to sync th
 
 ## Configuring the Module
 
+### Mandatory Steps
+
 1. Open **/sitecore/system/Modules/GenAI/Settings/GenAI Settings** item in Content Editor;
 
 1. Populate the fields **API Key** with your [OpenAI API Key](#prerequisites) and select the **Model** you want to use;
@@ -69,17 +77,32 @@ No matter the option selected, after installing the package, you need to sync th
 
    1. **Use Sitecore Connect** - If this field is checked, Sitecore Connect will be used for faster generating images asyncronously. Otherwise, Sitecore Connect is not used and images are generated syncronously, which is slower.
 
-1. Optionally, if the field **Use Sitecore Connect** is checked, follow the steps below:
+### Optional Steps
 
-   1. [Download here](https://github.com/peplau/Sitecore-GenAI/dist/connect-recipe_genai-symposium-2024.zip) and install the Sitecore Connect package into your Sitecore Connect instance ([Read this article](https://docs.workato.com/recipe-development-lifecycle/import.html) for details on how to install the package in Sitecore Connect), then follow the steps below:
-      1. Configure the **CH Symposium 2024** connection with the Content Hub OAuth information
-      1. Configure the **OpenAI Symposium** connection with your OpenAI API Key
-      1. Start the formulas **Generate Image with AI** and **Build GraphQL Query to Save Image Field**
-   1. Populate the fields under the **Sitecore Connect Settings** group:
+#### 1) Using Sitecore Connect for Asyncronous Image Generation
 
-      1. **Generate Image Endpoint** - Your Sitecore Connect endpoint to the Generate Image Webhook (Eg: https://webhooks.workato.com/webhooks/rest/{yourID}/generateimage)
-      1. **GraphQL Base URL** - The Base URL of your GraphQL Endpoint (normally the CM - Eg: https://yourcms.sitecorecloud.io/)
-      1. **GraphQL Client ID** and **GraphQL Client Secret** as [described here](https://doc.sitecore.com/xmc/en/developers/xm-cloud/walkthrough--enabling-and-authorizing-requests-to-the-authoring-and-management-api.html#obtain-an-additional-access-token-optional)
+If the field **Use Sitecore Connect** is checked, you also have to follow the steps below:
+
+1. [Download here](https://github.com/peplau/Sitecore-GenAI/dist/connect-recipe_genai-symposium-2024.zip) and install the Sitecore Connect package into your Sitecore Connect instance ([Read this article](https://docs.workato.com/recipe-development-lifecycle/import.html) for details on how to install the package in Sitecore Connect), then follow the steps below:
+    1. Configure the **CH Symposium 2024** connection with the Content Hub OAuth information
+    1. Configure the **OpenAI Symposium** connection with your OpenAI API Key
+    1. Start the formulas **Generate Image with AI** and **Build GraphQL Query to Save Image Field**
+1. Populate the fields under the **Sitecore Connect Settings** group:
+
+    1. **Generate Image Endpoint** - Your Sitecore Connect endpoint to the Generate Image Webhook (Eg: https://webhooks.workato.com/webhooks/rest/{yourID}/generateimage)
+    1. **GraphQL Base URL** - The Base URL of your GraphQL Endpoint (normally the CM - Eg: https://yourcms.sitecorecloud.io/)
+    1. **GraphQL Client ID** and **GraphQL Client Secret** as [described here](https://doc.sitecore.com/xmc/en/developers/xm-cloud/walkthrough--enabling-and-authorizing-requests-to-the-authoring-and-management-api.html#obtain-an-additional-access-token-optional)
+
+#### 2) Using AI to help with Content Review
+
+The module comes with a sample workflow called **Sample GenAI Content Workflow**. When using this workflow, the content profiling is triggered at the **Ask AI for Changes** action, after the command **"Reject with AI"** is executed (normally by the content moderator).
+
+![Sample GenAI Content Workflow](/images/Demo-Workflow.png)
+
+> [!TIP]
+> You can easily integrate the **Ask AI for Changes** action in your custom workflows. To do so, copy the action from to your workflow, or follow the steps below:
+> 1. Create a new action item under your workflow command using the template **/sitecore/templates/Modules/PowerShell Console/PowerShell Script Workflow Action**
+> 1. Point the **Script** field to **/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI/Update Content with AI**
 
 ## Usage Instructions
 
@@ -118,6 +141,8 @@ The video below shows a demo of content being improved with help of AI by a cont
 
 ![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Editor-Improving-Content.gif)
 
+The following steps are shown in the video:
+
 1. Using Content Editor, the content author right clicks the item to be improved, then **Scripts > GenAI > Update Content with AI**;
 
 1. At the **Content** tab, the content author fills the fields:
@@ -131,6 +156,23 @@ The video below shows a demo of content being improved with help of AI by a cont
 
 ### USE CASE 3 - Moderator reviewing content in a workflow with AI
 
-The video below shows a demo of content being reviewed with help of AI by a content moderator
+The video below shows a demo of content being submitted for review by the content editor, and further being reviewed by a content moderator with help of AI
 
-![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Review-Content.gif)
+![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Reviewing-Content.gif)
+
+The following steps are shown in the video:
+
+1. Content author submits the generated content for revision under the **Sample GenAI Content Workflow**
+
+1. Moderator opens the **Workbox** and reviews the content under **Awaiting Approval**
+
+1. He didn't like the generated content, so he clicks on **Reject with AI**
+
+1. At the **Content** tab, the moderator fills the fields:
+    1. **What do you want to change in this content?**
+    1. **Select the length** - Content length to be generated (Headline, Medium or Long)
+    1. **Choose a tone for your text**
+
+1. At the **Template** tab, the moderator selects the fields to populate. He selects the **Content** field only.
+
+1. The content is generated and immediatelly available for the moderator to check again. This time he likes the results, so he clicks on **Approve and Publish**.
