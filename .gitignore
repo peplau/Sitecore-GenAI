@@ -8,8 +8,8 @@
 .scindex
 
 # Don't commit packages
-*.itempackage
-*.sicpackage
+#*.itempackage
+#*.sicpackage
 
 # Don't commit .vs folder
 /.vs/

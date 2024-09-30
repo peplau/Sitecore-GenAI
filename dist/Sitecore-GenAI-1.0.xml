@@ -1,0 +1,174 @@
+<project>
+  <Metadata>
+    <metadata>
+      <PackageName>Sitecore-GenAI</PackageName>
+      <Author>Rodrigo Peplau</Author>
+      <Version>1.0</Version>
+      <Revision />
+      <License />
+      <Comment />
+      <Attributes />
+      <Readme />
+      <Publisher />
+      <PostStep />
+      <PackageID />
+    </metadata>
+  </Metadata>
+  <SaveProject>True</SaveProject>
+  <Sources>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/templates/Modules/GenAI/{2150C220-DFE5-46AE-9393-9F7A85688FC8}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Data/{D463CC36-8E3A-4221-9103-8A9EF2DC99C5}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Data/OpenAI Model/__Standard Values/{832F9914-2445-4ACF-A8BF-29D90AEE69D4}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Data/OpenAI Model/{48B9C4D5-E7E3-49AB-B427-FAB04868D552}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Data/OpenAI Model/Model Data/{B6641D2D-F6D5-4BD3-B395-1D6058B97347}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Data/OpenAI Model/Model Data/Model Key/{8203DA3B-FCFA-42A6-9AE3-E1CA6D09C909}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/{37F4FFD2-A6E3-4110-A103-B343CC7C90ED}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/__Standard Values/{B01DFD36-D108-4CC9-B0E7-397B2A36A989}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/{87B253EB-2F25-46A3-B27B-51D4CE85AC7B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Content Hub Settings/{1B69A69C-A123-42CC-BA7B-6AA70BDE600E}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Content Hub Settings/Base URL/{CDD78582-6D36-48C7-AB75-F2C0631FFD0F}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Content Hub Settings/Password/{151DBCA8-0231-4F0B-97C1-669324A7AAEB}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Content Hub Settings/Username/{ADA9740A-C7D2-436B-88D0-780D2D4C2776}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/OpenAI Settings/{A184F4C7-7C88-4912-95B4-95A925E2CA4B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/OpenAI Settings/API Key/{0AE1B6E0-CE2B-4079-BCC9-302851E9522A}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/OpenAI Settings/Model/{D48C2E63-7717-457F-9625-C73473322E0B}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/{3F2BC65E-C90D-46F3-A346-A83F880C1A23}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/Generate Image Endpoint/{907AC4B8-E842-4586-BE89-39C6C2E8AA0D}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/GraphQL Base URL/{ECBF5EAB-2EA3-470E-9572-CA03972FD1CA}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/GraphQL Client ID/{1E06B01E-6FBA-4978-A86D-6782C9F5DA67}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/GraphQL Client Secret/{A353E334-B781-48C0-8218-0F8CC5735E64}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Modules/GenAI/Settings/GenAI Settings/Sitecore Connect Settings/Use Sitecore Connect/{132DB56A-1FA9-4563-B70C-BF4F4A3858A8}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.Templates.Module</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/GenAI/{D0E59C21-409C-46B9-A284-5A44AC321180}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.System.ModuleFolder</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/{278590F2-E4F3-46B7-84EE-8EC8734891A2}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.System.ModuleFolder.Data</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/{ED8F98B9-88F9-400D-82CD-FB567C4013EA}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/GPT 4 Omni Mini/{F10B743F-5A8D-4FD9-9490-2F645D06B4EC}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/gpt-35-turbo/{1ED20B1B-CC0D-49EC-A992-D4025AC4BC6B}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/gpt-4/{DB2A1C69-9E89-479B-A09A-EC22302723B6}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/gpt-4o/{5AD186B0-FDBC-4B34-9F71-17BC8010B5EC}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Data/Models/gpt-4-turbo/{5558C9D2-B3C5-4FB3-82A8-407C7ADD8604}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.System.ModuleFolder.Data.Models</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/GenAI/Settings/{96552401-745E-4760-B539-BBCBDB3E30D5}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/GenAI/Settings/GenAI Settings/{E44854E2-AF2B-4E08-AAC5-FE7A90DB8F97}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.System.ModuleFolder.Settings</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/{59285324-D991-41EC-A23D-A82D555EEA42}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/{5FB85960-3297-4826-98C8-02BF7F42BF18}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/{62F01C83-96BA-431D-B8FB-3DDE06818060}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/{59F1CF29-88A0-46AF-B652-0CE819DE866E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI/{1106B4DB-C460-4A15-8D92-FDB0EAF46CE6}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI/Generate Content with AI/{6368AD64-F2D4-48E8-83FC-DDC44FA3C9F5}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Content Editor/Context Menu/GenAI/Update Content with AI/{BC7B52DF-221D-46DA-BBAB-9E2052D05E5D}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Functions/{3596B528-9B00-4C8D-9A5A-D9C8AD35E1A4}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Functions/GenAI_Constants/{6F3579CD-33F5-41CB-8E4F-1A9A8BFFFF21}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/PowerShell/Script Library/GenAI/Content Generation/Functions/GenAI_Functions/{0A2C8B1A-F584-42FA-89FB-3CBC174E3D49}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.System.Scripts</Name>
+    </xitems>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/{EDA5DAF3-6110-4A4D-BE64-2517D8E7AD8E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Approved/{AD3CFE55-9130-4C57-8724-FEE3876530B2}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Approved/Auto Publish/{9787A7B4-6740-495F-878B-4A0B0DDD9B5D}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/{9766DA8C-0C01-4DFA-8FA7-8CE796311C8F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Approve and Publish/{CBB4B679-DAB0-4AD6-9FF4-A7731EE574A7}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Approve and Publish/Validation Action/{0F4656B6-4C79-4598-81EB-643589678604}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Reject with a person/{7ECF6C2D-5A86-41F3-9C9F-3577B46A55E8}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Reject with AI/{88D67C22-8913-4646-AC97-BBC5CB83042F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Awaiting Approval/Reject with AI/Ask AI for Changes/{C20E4E0E-8C5B-458D-B3D8-5EE9C9C3084E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Draft/__OnSave/{F8B4780E-235A-41EB-A4BE-91A83C34627F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Draft/__OnSave/Auto Submit Action/{F8D6AF8A-9D0A-4609-8D2E-1E7C9FD41EB1}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Draft/{74946C24-7B69-4B36-BB6A-C4D9E8E04E82}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Workflows/Sample GenAI Content Workflow/Draft/Submit/{A4ED954C-B256-498B-9483-647FE2D71DDD}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>GenAI.Demo.System.Workflow</Name>
+    </xitems>
+  </Sources>
+  <Converter>
+    <TrivialConverter>
+      <Transforms />
+    </TrivialConverter>
+  </Converter>
+  <Include />
+  <Exclude />
+  <Name />
+</project>
