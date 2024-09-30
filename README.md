@@ -130,3 +130,7 @@ The video below shows a demo of content being improved with help of AI by a cont
 <hr />
 
 ### USE CASE 3 - Moderator reviewing content in a workflow with AI
+
+The video below shows a demo of content being reviewed with help of AI by a content moderator
+
+![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Review-Content.gif)
