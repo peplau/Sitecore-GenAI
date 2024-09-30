@@ -91,6 +91,6 @@ After the module is installed and configured, you will see the following scripts
 
 <hr/>
 
-![GenAI folder in Content Editor](/images/videos/Editor-Create-Content.gif)
+![](/images/videos/Editor-Create-Content.gif)
 
 <hr/>
