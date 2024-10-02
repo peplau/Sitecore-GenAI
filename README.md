@@ -24,15 +24,15 @@ Assets can be generated and stored in Content Hub in two ways:
 - Sitecore **Content Hub** with an **OAuth Client** configured [as described here](https://doc.sitecore.com/ch/en/users/content-hub/create-an-oauth-client.html)
 - Sitecore **XP**, **XM** or **XM Cloud** 
 - [Sitecore Powershell Extensions](https://doc.sitecorepowershell.com/installation)
-- [OpenAI API Key](CreatingAPIKeys.md) - Before using the module, you need to configure the OpenAI API Key. If you need help to get your API Key, follow the steps in the [Creating an OpenAI API Key guide](CreatingAPIKeys.md)
+- [OpenAI API Key](CreatingAPIKeys.md) - Before using the module, you must configure the OpenAI API Key. If you need help to get your API Key, follow the steps in the [Creating an OpenAI API Key guide](CreatingAPIKeys.md)
 
 ### Optional
-- **Sitecore Connect** for Asyncronous image generation. The module works without it, but the Syncronous generation of images makes the experience slower.
+- **Sitecore Connect** for Asynchronous image generation. The module works without it, but the Synchronous generation of images makes the experience slower.
 - For a better experience with image selection with **Content Hub**, your **XP**, **XM** or **XM Cloud** must have [enabled the DAM connector as described here](https://doc.sitecore.com/xmc/en/developers/xm-cloud/walkthrough--enabling-the-dam-connector-in-an-environment-deployed-to-xm-cloud.html)
 
 ## Installation
 
-**Sitecore GenAI Assistant** is a Powershell-only Module that doesn't include any binaries or executables. To start using it, all you have to do is to install the module into your Sitecore instance with a few simple steps.
+**Sitecore GenAI Assistant** is a Powershell-only Module with no binaries or executables. To start using it, all you have to do is to install the module into your Sitecore instance with a few simple steps.
 
 The module is distributed in two flavors:
 
@@ -45,7 +45,7 @@ For a quick installation via Sitecore Package, follow the steps below:
 
 ### Option 2 - With Sitecore CLI Content Serialization (.itempackage)
 
-To use SCS packages (.itempackage) as build artifacts in your continuous integration pipeline, install it in your delivery pipeline:
+To use SCS packages (.itempackage) as build artifacts in your continuous integration pipeline, install them in your delivery pipeline:
 
 1. Download the latest .itempackage package from the [Releases](https://github.com/peplau/Sitecore-GenAI/releases) page;
 1. Install the package in your delivery pipeline [following this instructions](https://doc.sitecore.com/xp/en/developers/104/developer-tools/create-and-install-a-sitecore-content-serialization-package.html#install-an-scs-package-in-your-delivery-pipeline).
@@ -83,11 +83,11 @@ No matter the option selected, after installing the package, you need to sync th
 
    ![Sitecore Connect Settings](/images/Sitecore-Connect-Settings.png)
 
-   1. **Use Sitecore Connect** - If this field is checked, Sitecore Connect will be used for faster generating images asyncronously. Otherwise, Sitecore Connect is not used and images are generated syncronously, which is slower.
+   1. **Use Sitecore Connect** - If this field is checked, Sitecore Connect will be used for faster-generating images asynchronously. Otherwise, Sitecore Connect is not used and images are generated synchronously, which is slower.
 
 ### Optional Steps
 
-#### 1) Using Sitecore Connect for Asyncronous Image Generation
+#### 1) Using Sitecore Connect for Asynchronous Image Generation
 
 If the field **Use Sitecore Connect** is checked, you also have to follow the steps below:
 
@@ -126,11 +126,11 @@ The video below shows a demo of content being created with help of AI by a conte
 
 The following steps are shown in the video:
 
-1. Using Content Editor, the content author right clicks the item where the new item is going to be created, then **Scripts > GenAI > Generate Content with AI**;
+1. Using Content Editor, the content author right-clicks the item where the new item is going to be created, then **Scripts > GenAI > Generate Content with AI**;
 
 1. The content author selects the template to be used in the new item creation (Eg: Page);
 
-1. At the **Content** tab, the content author fills the fields:
+1. At the **Content** tab, the content author fills in the fields:
     1. **Force Item Name** (optional) - If the field is left empty, the item name will also be generated with AI;
     1. **What do you want the content to speak about?**
     1. **Keywords (comma-separated)**
@@ -139,7 +139,7 @@ The following steps are shown in the video:
 
 1. At the **Template** tab, the author selects the fields to populate with generated content (Text and Image fields are allowed)
 
-After the content is generated, the video shows all text fields populated, but not the image field, which is still being populated asyncronously by Sitecore Connect. After some time, the page is refreshed and the generated image will show up.
+After the content is generated, the video shows all text fields populated, but not the image field, which is still being populated asynchronously by Sitecore Connect. After some time, the page is refreshed and the generated image will show up.
 
 <hr />
 
@@ -151,9 +151,9 @@ The video below shows a demo of content being improved with help of AI by a cont
 
 The following steps are shown in the video:
 
-1. Using Content Editor, the content author right clicks the item to be improved, then **Scripts > GenAI > Update Content with AI**;
+1. Using Content Editor, the content author right-clicks the item to be improved, then **Scripts > GenAI > Update Content with AI**;
 
-1. At the **Content** tab, the content author fills the fields:
+1. At the **Content** tab, the content author fills in the fields:
     1. **What do you want to change in this content?**
     1. **Select the length** - Content length to be generated (Headline, Medium or Long)
     1. **Choose a tone for your text**
@@ -164,23 +164,23 @@ The following steps are shown in the video:
 
 ### USE CASE 3 - Moderator reviewing content in a workflow with AI
 
-The video below shows a demo of content being submitted for review by the content editor, and further being reviewed by a content moderator with help of AI
+The video below shows a demo of content being submitted for review by the content editor, and further being reviewed by a content moderator with the help of AI
 
 ![](https://github.com/peplau/Sitecore-GenAI/blob/main/images/videos/Reviewing-Content.gif)
 
 The following steps are shown in the video:
 
-1. Content author submits the generated content for revision under the **Sample GenAI Content Workflow**
+1. The content author submits the generated content for revision under the **Sample GenAI Content Workflow**
 
 1. Moderator opens the **Workbox** and reviews the content under **Awaiting Approval**
 
 1. He didn't like the generated content, so he clicks on **Reject with AI**
 
-1. At the **Content** tab, the moderator fills the fields:
+1. At the **Content** tab, the moderator fills in the fields:
     1. **What do you want to change in this content?**
     1. **Select the length** - Content length to be generated (Headline, Medium or Long)
     1. **Choose a tone for your text**
 
 1. At the **Template** tab, the moderator selects the fields to populate. He selects the **Content** field only.
 
-1. The content is generated and immediatelly available for the moderator to check again. This time he likes the results, so he clicks on **Approve and Publish**.
+1. The content is generated and immediately available for the moderator to check again. This time he likes the results, so he clicks on **Approve and Publish**.
